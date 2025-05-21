@@ -136,11 +136,11 @@ export default function MealsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f2f2f2', padding: 20 },
-  title: { fontSize: 26, fontWeight: 'bold', marginBottom: 10 },
+  container: { flex: 1, backgroundColor: '#f0f4f8', padding: 20 },
+  title: { fontSize: 28, fontWeight: '700', marginBottom: 10 },
   searchBar: {
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 10,
     marginBottom: 14,
@@ -148,17 +148,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   addButton: {
-    backgroundColor: '#1e3c72',
+    backgroundColor: '#00796b',
     padding: 14,
-    borderRadius: 10,
+    borderRadius: 12,
     alignItems: 'center',
     marginBottom: 20,
   },
-  addButtonText: { color: 'white', fontSize: 16, fontWeight: '600' },
+  addButtonText: { color: 'white', fontSize: 18, fontWeight: '700' },
   card: {
     backgroundColor: 'white',
     padding: 16,
-    borderRadius: 10,
+    borderRadius: 12,
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
@@ -178,22 +178,22 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 12,
     padding: 24,
   },
-  modalTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 16 },
+  modalTitle: { fontSize: 22, fontWeight: '700', marginBottom: 16 },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
+    borderWidth: 2,
+    borderColor: '#00796b',
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 10,
   },
   saveButton: {
     marginTop: 20,
-    backgroundColor: '#1e3c72',
-    paddingVertical: 12,
-    borderRadius: 10,
+    backgroundColor: '#00796b',
+    paddingVertical: 14,
+    borderRadius: 12,
     alignItems: 'center',
   },
-  saveButtonText: { color: 'white', fontWeight: 'bold' },
+  saveButtonText: { color: 'white', fontWeight: '700' },
 });

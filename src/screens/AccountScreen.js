@@ -59,25 +59,25 @@ export default function AccountScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#f2f2f2' },
-  header: { fontSize: 28, fontWeight: 'bold', marginBottom: 30 },
+  container: { flex: 1, padding: 30, backgroundColor: '#e0f7fa' },
+  header: { fontSize: 32, fontWeight: '700', marginBottom: 30 },
   section: {
-    backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 10,
+    backgroundColor: '#ffffff',
+    padding: 20,
+    borderRadius: 12,
     marginBottom: 30,
   },
   label: { color: '#666', fontWeight: '600', marginTop: 10 },
   value: { fontSize: 16, marginTop: 2 },
   button: {
-    backgroundColor: '#1e3c72',
-    paddingVertical: 14,
-    borderRadius: 10,
+    backgroundColor: '#00796b',
+    paddingVertical: 16,
+    borderRadius: 12,
     marginBottom: 15,
     alignItems: 'center',
   },
-  buttonText: { color: 'white', fontWeight: 'bold' },
+  buttonText: { color: 'white', fontWeight: '700' },
   logout: {
-    backgroundColor: '#555',
+    backgroundColor: '#004d40',
   },
 });

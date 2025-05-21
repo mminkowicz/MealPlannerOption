@@ -13,11 +13,11 @@ export default function TabNavigator() {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#1e3c72',
-          borderTopWidth: 0,
+          backgroundColor: '#2c3e50',
+          borderTopWidth: 1,
         },
-        tabBarActiveTintColor: '#fff',
-        tabBarInactiveTintColor: '#ccc',
+        tabBarActiveTintColor: '#ecf0f1',
+        tabBarInactiveTintColor: '#95a5a6',
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
