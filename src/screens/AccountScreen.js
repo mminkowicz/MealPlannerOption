@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   Alert,
 } from 'react-native';
@@ -36,48 +35,24 @@ export default function AccountScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>👤 My Account</Text>
+    <View className="flex-1 p-8 bg-teal-100">
+      <Text className="text-4xl font-bold mb-8">👤 My Account</Text>
 
-      <View style={styles.section}>
-        <Text style={styles.label}>Name</Text>
-        <Text style={styles.value}>Mendel Minkowicz</Text>
+      <View className="bg-white p-5 rounded-xl mb-8">
+        <Text className="text-gray-600 font-semibold mt-2">Name</Text>
+        <Text className="text-lg mt-1">Mendel Minkowicz</Text>
 
-        <Text style={styles.label}>Email</Text>
-        <Text style={styles.value}>mminkowicz@gmail.com</Text>
+        <Text className="text-gray-600 font-semibold mt-2">Email</Text>
+        <Text className="text-lg mt-1">mminkowicz@gmail.com</Text>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleResetApp}>
-        <Text style={styles.buttonText}>🗑️ Reset App (Delete All Meals)</Text>
+      <TouchableOpacity className="bg-teal-700 py-4 rounded-xl mb-4 items-center" onPress={handleResetApp}>
+        <Text className="text-white font-bold">🗑️ Reset App (Delete All Meals)</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, styles.logout]} onPress={handleLogout}>
-        <Text style={styles.buttonText}>🚪 Logout</Text>
+      <TouchableOpacity className="bg-teal-900 py-4 rounded-xl items-center" onPress={handleLogout}>
+        <Text className="text-white font-bold">🚪 Logout</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 30, backgroundColor: '#e0f7fa' },
-  header: { fontSize: 32, fontWeight: '700', marginBottom: 30 },
-  section: {
-    backgroundColor: '#ffffff',
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 30,
-  },
-  label: { color: '#666', fontWeight: '600', marginTop: 10 },
-  value: { fontSize: 16, marginTop: 2 },
-  button: {
-    backgroundColor: '#00796b',
-    paddingVertical: 16,
-    borderRadius: 12,
-    marginBottom: 15,
-    alignItems: 'center',
-  },
-  buttonText: { color: 'white', fontWeight: '700' },
-  logout: {
-    backgroundColor: '#004d40',
-  },
-});

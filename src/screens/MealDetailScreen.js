@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   SectionList,
   TouchableOpacity,
   Modal,
@@ -125,10 +124,10 @@ export default function MealDetailScreen() {
 
   return (
     <Provider>
-      <View style={styles.container}>
-        <Text style={styles.title}>{meal.name}</Text>
+      <View className="flex-1 p-5 bg-gray-100">
+        <Text className="text-2xl font-bold mb-5">{meal.name}</Text>
 
-        <Button mode="contained" onPress={() => setModalVisible(true)} style={styles.addButton}>
+        <Button mode="contained" onPress={() => setModalVisible(true)} className="bg-teal-700 py-3 rounded-lg mb-5">
           ➕ Add New Item
         </Button>
 
@@ -136,19 +135,19 @@ export default function MealDetailScreen() {
           sections={grouped}
           keyExtractor={(item, index) => item.name + index}
           renderSectionHeader={({ section }) => (
-            <Text style={styles.sectionHeader}>{section.title}</Text>
+            <Text className="text-xl font-bold mt-5">{section.title}</Text>
           )}
           renderItem={({ item }) => (
-            <Card style={styles.card}>
+            <Card className="bg-white p-4 rounded-lg my-2">
               <Card.Title
                 title={item.name}
                 right={() => (
-                  <View style={styles.cardActions}>
+                  <View className="flex-row gap-3">
                     <TouchableOpacity onPress={() => handleEditItem(item, item._index)}>
-                      <Text style={styles.editBtn}>✏️</Text>
+                      <Text className="text-lg mr-3">✏️</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleDeleteItem(item._index)}>
-                      <Text style={styles.deleteBtn}>🗑️</Text>
+                      <Text className="text-lg">🗑️</Text>
                     </TouchableOpacity>
                   </View>
                 )}
@@ -160,10 +159,7 @@ export default function MealDetailScreen() {
                   return (
                     <TouchableOpacity key={i} onPress={() => toggleCheck(item.name, g.name)}>
                       <Text
-                        style={[
-                          styles.groceryLine,
-                          isChecked && styles.groceryLineChecked,
-                        ]}
+                        className={`text-base pl-3 mt-1 ${isChecked ? 'text-gray-500 line-through' : ''}`}
                       >
                         ✅ {g.name} {g.qty ? `(${g.qty})` : ''}
                       </Text>
@@ -176,22 +172,22 @@ export default function MealDetailScreen() {
         />
 
         <Portal>
-          <PaperModal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={styles.modal}>
+          <PaperModal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={{ flex: 1, padding: 24, backgroundColor: 'white' }}>
             <ScrollView>
-              <Text style={styles.modalTitle}>{isEditing ? 'Edit Dish' : 'Add New Dish'}</Text>
+              <Text className="text-2xl font-bold mb-6">{isEditing ? 'Edit Dish' : 'Add New Dish'}</Text>
 
               <PaperTextInput
                 label="Dish Name"
                 value={itemName}
                 onChangeText={setItemName}
                 mode="outlined"
-                style={styles.input}
+                className="border-2 border-teal-700 p-3 rounded-lg mb-4"
               />
 
-              <Text style={styles.label}>Select Type</Text>
+              <Text className="font-bold mt-3 mb-2">Select Type</Text>
               {ITEM_TYPES.map((type) => (
                 <Pressable key={type} onPress={() => setItemType(type)}>
-                  <Text style={itemType === type ? styles.selectedType : styles.unselectedType}>
+                  <Text className={`p-3 mb-2 rounded-lg ${itemType === type ? 'bg-teal-700 text-white' : 'bg-teal-100'}`}>
                     {type}
                   </Text>
                 </Pressable>
@@ -203,27 +199,27 @@ export default function MealDetailScreen() {
                   value={customType}
                   onChangeText={setCustomType}
                   mode="outlined"
-                  style={styles.input}
+                  className="border-2 border-teal-700 p-3 rounded-lg mb-4"
                 />
               )}
 
-              <Text style={styles.label}>Grocery Items (Optional)</Text>
-              <View style={styles.groceryRow}>
+              <Text className="font-bold mt-3 mb-2">Grocery Items (Optional)</Text>
+              <View className="flex-row mb-4">
                 <PaperTextInput
                   label="Add a grocery item"
                   value={groceryInput}
                   onChangeText={setGroceryInput}
                   mode="outlined"
-                  style={styles.groceryInput}
+                  className="flex-1 border-2 border-teal-700 rounded-lg p-3"
                 />
-                <Button mode="contained" onPress={handleAddGrocery} style={styles.addGroceryButton}>
+                <Button mode="contained" onPress={handleAddGrocery} className="ml-3 bg-teal-700 rounded-lg px-4 justify-center">
                   +
                 </Button>
               </View>
 
               {groceries.map((g, i) => (
-                <View key={i} style={styles.groceryListRow}>
-                  <Text style={{ flex: 1 }}>{g.name}</Text>
+                <View key={i} className="flex-row items-center mb-3">
+                  <Text className="flex-1">{g.name}</Text>
                   <PaperTextInput
                     label="Qty"
                     value={qtyInputs[i] || ''}
@@ -231,19 +227,19 @@ export default function MealDetailScreen() {
                       setQtyInputs((prev) => ({ ...prev, [i]: text }))
                     }
                     mode="outlined"
-                    style={styles.qtyInput}
+                    className="w-20 ml-3 p-2 border-2 border-teal-700 rounded-lg"
                   />
                 </View>
               ))}
 
-              <View style={styles.bottomButtons}>
+              <View className="mt-9 flex-col gap-3">
                 <Button mode="contained" onPress={() => {
                   setModalVisible(false);
                   resetModalState();
-                }} style={[styles.fullButton, { backgroundColor: '#ccc' }]}>
+                }} className="py-4 rounded-lg items-center bg-gray-400">
                   Cancel
                 </Button>
-                <Button mode="contained" onPress={handleSaveItem} style={[styles.fullButton, { backgroundColor: '#1e3c72' }]}>
+                <Button mode="contained" onPress={handleSaveItem} className="py-4 rounded-lg items-center bg-teal-900">
                   Save
                 </Button>
               </View>
@@ -254,99 +250,3 @@ export default function MealDetailScreen() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#f0f4f8' },
-  title: { fontSize: 28, fontWeight: '700', marginBottom: 20 },
-  addButton: {
-    backgroundColor: '#00796b',
-    padding: 14,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  sectionHeader: { fontSize: 22, fontWeight: '700', marginTop: 20 },
-  card: {
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 12,
-    marginVertical: 8,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  cardTitle: { fontSize: 18, fontWeight: '700' },
-  cardActions: { flexDirection: 'row', gap: 12 },
-  editBtn: { fontSize: 18, marginRight: 12 },
-  deleteBtn: { fontSize: 18 },
-  groceryLine: { fontSize: 16, paddingLeft: 12, marginTop: 6 },
-  groceryLineChecked: {
-    color: 'gray',
-    textDecorationLine: 'line-through',
-  },
-  modal: { flex: 1, padding: 24, backgroundColor: 'white' },
-  modalTitle: { fontSize: 24, fontWeight: '700', marginBottom: 24 },
-  input: {
-    borderWidth: 2,
-    borderColor: '#00796b',
-    padding: 12,
-    borderRadius: 10,
-    marginBottom: 16,
-  },
-  label: { fontWeight: '700', marginTop: 12, marginBottom: 8 },
-  selectedType: {
-    backgroundColor: '#00796b',
-    color: 'white',
-    padding: 12,
-    marginBottom: 8,
-    borderRadius: 8,
-  },
-  unselectedType: {
-    backgroundColor: '#e0f7fa',
-    padding: 12,
-    marginBottom: 8,
-    borderRadius: 8,
-  },
-  groceryRow: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  groceryInput: {
-    flex: 1,
-    borderWidth: 2,
-    borderColor: '#00796b',
-    borderRadius: 8,
-    padding: 12,
-  },
-  addGroceryButton: {
-    marginLeft: 12,
-    backgroundColor: '#00796b',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    justifyContent: 'center',
-  },
-  groceryListRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  qtyInput: {
-    width: 80,
-    marginLeft: 12,
-    padding: 8,
-    borderColor: '#00796b',
-    borderWidth: 2,
-    borderRadius: 8,
-  },
-  bottomButtons: {
-    marginTop: 36,
-    flexDirection: 'column',
-    gap: 12,
-  },
-  fullButton: {
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-});

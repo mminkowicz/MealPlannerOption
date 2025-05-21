@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
-  StyleSheet,
   Alert,
 } from 'react-native';
 import { useMeals } from '../context/MealContext';
@@ -66,67 +65,67 @@ export default function MealsScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>🍽️ My Meals</Text>
+    <View className="flex-1 bg-gray-100 p-5">
+      <Text className="text-2xl font-bold mb-5">🍽️ My Meals</Text>
 
       <TextInput
         placeholder="Search meals..."
-        style={styles.searchBar}
+        className="bg-white rounded-lg p-3 mb-4 border border-gray-300"
         value={search}
         onChangeText={setSearch}
       />
 
       <TouchableOpacity
-        style={styles.addButton}
+        className="bg-teal-700 py-4 rounded-lg items-center mb-5"
         onPress={() => {
           setMealName('');
           setIsRenaming(false);
           setModalVisible(true);
         }}
       >
-        <Text style={styles.addButtonText}>➕ Add New Meal</Text>
+        <Text className="text-white font-bold">➕ Add New Meal</Text>
       </TouchableOpacity>
 
       <FlatList
         data={filteredMeals}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.card}>
+          <View className="bg-white p-4 rounded-lg mb-3 flex-row items-center shadow-md gap-3">
             <TouchableOpacity
-              style={{ flex: 1 }}
+              className="flex-1"
               onPress={() => navigation.navigate('MealDetail', { meal: item })}
             >
-              <Text style={styles.cardText}>{item.name}</Text>
+              <Text className="text-lg">{item.name}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleCopyMeal(item)}>
-              <Text style={styles.icon}>📋</Text>
+              <Text className="text-lg">📋</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleRename(item)}>
-              <Text style={styles.icon}>✏️</Text>
+              <Text className="text-lg">✏️</Text>
             </TouchableOpacity>
           </View>
         )}
       />
 
       <Modal visible={modalVisible} animationType="slide" transparent>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>
+        <View className="flex-1 bg-black bg-opacity-50 justify-center p-8">
+          <View className="bg-white rounded-lg p-6">
+            <Text className="text-xl font-bold mb-4">
               {isRenaming ? 'Rename Meal' : 'Add New Meal'}
             </Text>
             <TextInput
-              style={styles.input}
+              className="border-2 border-teal-700 p-3 rounded-lg"
               placeholder="Meal Name"
               value={mealName}
               onChangeText={setMealName}
             />
-            <TouchableOpacity style={styles.saveButton} onPress={handleAddOrRenameMeal}>
-              <Text style={styles.saveButtonText}>
+            <TouchableOpacity className="bg-teal-700 py-4 rounded-lg items-center mt-5" onPress={handleAddOrRenameMeal}>
+              <Text className="text-white font-bold">
                 {isRenaming ? 'Rename' : 'Save'}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setModalVisible(false)}>
-              <Text style={{ color: 'red', marginTop: 12 }}>Cancel</Text>
+              <Text className="text-red-500 mt-3">Cancel</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -134,66 +133,3 @@ export default function MealsScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f0f4f8', padding: 20 },
-  title: { fontSize: 28, fontWeight: '700', marginBottom: 10 },
-  searchBar: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    marginBottom: 14,
-    borderColor: '#ddd',
-    borderWidth: 1,
-  },
-  addButton: {
-    backgroundColor: '#00796b',
-    padding: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  addButtonText: { color: 'white', fontSize: 18, fontWeight: '700' },
-  card: {
-    backgroundColor: 'white',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 3,
-    gap: 12,
-  },
-  cardText: { fontSize: 18 },
-  icon: { fontSize: 18 },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    padding: 30,
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 24,
-  },
-  modalTitle: { fontSize: 22, fontWeight: '700', marginBottom: 16 },
-  input: {
-    borderWidth: 2,
-    borderColor: '#00796b',
-    padding: 12,
-    borderRadius: 10,
-  },
-  saveButton: {
-    marginTop: 20,
-    backgroundColor: '#00796b',
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  saveButtonText: { color: 'white', fontWeight: '700' },
-});
