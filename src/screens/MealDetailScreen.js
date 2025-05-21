@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { useMeals } from '../context/MealContext';
+import { Card, Button, TextInput as PaperTextInput, Modal as PaperModal, Portal, Provider } from 'react-native-paper';
+import { Animated } from 'react-native';
 
 const ITEM_TYPES = ['Meat', 'Dairy', 'Drink', 'Appetizer', 'Fish', 'Dessert', 'Custom'];
 
@@ -122,128 +124,134 @@ export default function MealDetailScreen() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{meal.name}</Text>
+    <Provider>
+      <View style={styles.container}>
+        <Text style={styles.title}>{meal.name}</Text>
 
-      <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
-        <Text style={styles.addButtonText}>➕ Add New Item</Text>
-      </TouchableOpacity>
+        <Button mode="contained" onPress={() => setModalVisible(true)} style={styles.addButton}>
+          ➕ Add New Item
+        </Button>
 
-      <SectionList
-        sections={grouped}
-        keyExtractor={(item, index) => item.name + index}
-        renderSectionHeader={({ section }) => (
-          <Text style={styles.sectionHeader}>{section.title}</Text>
-        )}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>{item.name}</Text>
-              <View style={styles.cardActions}>
-                <TouchableOpacity onPress={() => handleEditItem(item, item._index)}>
-                  <Text style={styles.editBtn}>✏️</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleDeleteItem(item._index)}>
-                  <Text style={styles.deleteBtn}>🗑️</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            {item.groceries.map((g, i) => {
-              const key = `${item.name}-${g.name}`;
-              const isChecked = checkedItems[key];
-              return (
-                <TouchableOpacity key={i} onPress={() => toggleCheck(item.name, g.name)}>
-                  <Text
-                    style={[
-                      styles.groceryLine,
-                      isChecked && styles.groceryLineChecked,
-                    ]}
-                  >
-                    ✅ {g.name} {g.qty ? `(${g.qty})` : ''}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        )}
-      />
-
-      <Modal visible={modalVisible} animationType="slide">
-        <ScrollView style={styles.modal}>
-          <Text style={styles.modalTitle}>{isEditing ? 'Edit Dish' : 'Add New Dish'}</Text>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Dish Name"
-            value={itemName}
-            onChangeText={setItemName}
-          />
-
-          <Text style={styles.label}>Select Type</Text>
-          {ITEM_TYPES.map((type) => (
-            <Pressable key={type} onPress={() => setItemType(type)}>
-              <Text style={itemType === type ? styles.selectedType : styles.unselectedType}>
-                {type}
-              </Text>
-            </Pressable>
-          ))}
-
-          {itemType === 'Custom' && (
-            <TextInput
-              style={styles.input}
-              placeholder="Custom Type"
-              value={customType}
-              onChangeText={setCustomType}
-            />
+        <SectionList
+          sections={grouped}
+          keyExtractor={(item, index) => item.name + index}
+          renderSectionHeader={({ section }) => (
+            <Text style={styles.sectionHeader}>{section.title}</Text>
           )}
-
-          <Text style={styles.label}>Grocery Items (Optional)</Text>
-          <View style={styles.groceryRow}>
-            <TextInput
-              style={styles.groceryInput}
-              placeholder="Add a grocery item"
-              value={groceryInput}
-              onChangeText={setGroceryInput}
-            />
-            <Pressable onPress={handleAddGrocery} style={styles.addGroceryButton}>
-              <Text style={{ color: 'white' }}>+</Text>
-            </Pressable>
-          </View>
-
-          {groceries.map((g, i) => (
-            <View key={i} style={styles.groceryListRow}>
-              <Text style={{ flex: 1 }}>{g.name}</Text>
-              <TextInput
-                style={styles.qtyInput}
-                placeholder="Qty"
-                value={qtyInputs[i] || ''}
-                onChangeText={(text) =>
-                  setQtyInputs((prev) => ({ ...prev, [i]: text }))
-                }
+          renderItem={({ item }) => (
+            <Card style={styles.card}>
+              <Card.Title
+                title={item.name}
+                right={() => (
+                  <View style={styles.cardActions}>
+                    <TouchableOpacity onPress={() => handleEditItem(item, item._index)}>
+                      <Text style={styles.editBtn}>✏️</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleDeleteItem(item._index)}>
+                      <Text style={styles.deleteBtn}>🗑️</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
               />
-            </View>
-          ))}
+              <Card.Content>
+                {item.groceries.map((g, i) => {
+                  const key = `${item.name}-${g.name}`;
+                  const isChecked = checkedItems[key];
+                  return (
+                    <TouchableOpacity key={i} onPress={() => toggleCheck(item.name, g.name)}>
+                      <Text
+                        style={[
+                          styles.groceryLine,
+                          isChecked && styles.groceryLineChecked,
+                        ]}
+                      >
+                        ✅ {g.name} {g.qty ? `(${g.qty})` : ''}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </Card.Content>
+            </Card>
+          )}
+        />
 
-          <View style={styles.bottomButtons}>
-            <TouchableOpacity
-              style={[styles.fullButton, { backgroundColor: '#ccc' }]}
-              onPress={() => {
-                setModalVisible(false);
-                resetModalState();
-              }}
-            >
-              <Text style={{ color: '#333', fontWeight: 'bold' }}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.fullButton, { backgroundColor: '#1e3c72' }]}
-              onPress={handleSaveItem}
-            >
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </Modal>
-    </View>
+        <Portal>
+          <PaperModal visible={modalVisible} onDismiss={() => setModalVisible(false)} contentContainerStyle={styles.modal}>
+            <ScrollView>
+              <Text style={styles.modalTitle}>{isEditing ? 'Edit Dish' : 'Add New Dish'}</Text>
+
+              <PaperTextInput
+                label="Dish Name"
+                value={itemName}
+                onChangeText={setItemName}
+                mode="outlined"
+                style={styles.input}
+              />
+
+              <Text style={styles.label}>Select Type</Text>
+              {ITEM_TYPES.map((type) => (
+                <Pressable key={type} onPress={() => setItemType(type)}>
+                  <Text style={itemType === type ? styles.selectedType : styles.unselectedType}>
+                    {type}
+                  </Text>
+                </Pressable>
+              ))}
+
+              {itemType === 'Custom' && (
+                <PaperTextInput
+                  label="Custom Type"
+                  value={customType}
+                  onChangeText={setCustomType}
+                  mode="outlined"
+                  style={styles.input}
+                />
+              )}
+
+              <Text style={styles.label}>Grocery Items (Optional)</Text>
+              <View style={styles.groceryRow}>
+                <PaperTextInput
+                  label="Add a grocery item"
+                  value={groceryInput}
+                  onChangeText={setGroceryInput}
+                  mode="outlined"
+                  style={styles.groceryInput}
+                />
+                <Button mode="contained" onPress={handleAddGrocery} style={styles.addGroceryButton}>
+                  +
+                </Button>
+              </View>
+
+              {groceries.map((g, i) => (
+                <View key={i} style={styles.groceryListRow}>
+                  <Text style={{ flex: 1 }}>{g.name}</Text>
+                  <PaperTextInput
+                    label="Qty"
+                    value={qtyInputs[i] || ''}
+                    onChangeText={(text) =>
+                      setQtyInputs((prev) => ({ ...prev, [i]: text }))
+                    }
+                    mode="outlined"
+                    style={styles.qtyInput}
+                  />
+                </View>
+              ))}
+
+              <View style={styles.bottomButtons}>
+                <Button mode="contained" onPress={() => {
+                  setModalVisible(false);
+                  resetModalState();
+                }} style={[styles.fullButton, { backgroundColor: '#ccc' }]}>
+                  Cancel
+                </Button>
+                <Button mode="contained" onPress={handleSaveItem} style={[styles.fullButton, { backgroundColor: '#1e3c72' }]}>
+                  Save
+                </Button>
+              </View>
+            </ScrollView>
+          </PaperModal>
+        </Portal>
+      </View>
+    </Provider>
   );
 }
 
@@ -257,7 +265,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  addButtonText: { color: 'white', fontSize: 18 },
   sectionHeader: { fontSize: 22, fontWeight: '700', marginTop: 20 },
   card: {
     backgroundColor: '#ffffff',
