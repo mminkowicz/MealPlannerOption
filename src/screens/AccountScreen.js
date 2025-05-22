@@ -35,7 +35,7 @@ export default function AccountScreen() {
   };
 
   return (
-    <View className="flex-1 p-8 bg-teal-100">
+    <View className="flex-1 p-8 bg-gradient-to-r from-teal-100 to-teal-300">
       <Text className="text-4xl font-bold mb-8">👤 My Account</Text>
 
       <View className="bg-white p-5 rounded-xl mb-8">
@@ -46,11 +46,11 @@ export default function AccountScreen() {
         <Text className="text-lg mt-1">mminkowicz@gmail.com</Text>
       </View>
 
-      <TouchableOpacity className="bg-teal-700 py-4 rounded-xl mb-4 items-center" onPress={handleResetApp}>
+      <TouchableOpacity className="bg-gradient-to-r from-teal-700 to-teal-900 py-4 rounded-xl mb-4 items-center" onPress={handleResetApp}>
         <Text className="text-white font-bold">🗑️ Reset App (Delete All Meals)</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity className="bg-teal-900 py-4 rounded-xl items-center" onPress={handleLogout}>
+      <TouchableOpacity className="bg-gradient-to-r from-teal-900 to-teal-700 py-4 rounded-xl items-center" onPress={handleLogout}>
         <Text className="text-white font-bold">🚪 Logout</Text>
       </TouchableOpacity>
     </View>

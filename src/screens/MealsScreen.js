@@ -65,7 +65,7 @@ export default function MealsScreen() {
   };
 
   return (
-    <View className="flex-1 bg-gray-100 p-5">
+    <View className="flex-1 bg-gradient-to-r from-gray-100 to-gray-300 p-5">
       <Text className="text-2xl font-bold mb-5">🍽️ My Meals</Text>
 
       <TextInput
@@ -76,7 +76,7 @@ export default function MealsScreen() {
       />
 
       <TouchableOpacity
-        className="bg-teal-700 py-4 rounded-lg items-center mb-5"
+        className="bg-gradient-to-r from-teal-700 to-teal-900 py-4 rounded-lg items-center mb-5"
         onPress={() => {
           setMealName('');
           setIsRenaming(false);
@@ -119,7 +119,7 @@ export default function MealsScreen() {
               value={mealName}
               onChangeText={setMealName}
             />
-            <TouchableOpacity className="bg-teal-700 py-4 rounded-lg items-center mt-5" onPress={handleAddOrRenameMeal}>
+            <TouchableOpacity className="bg-gradient-to-r from-teal-700 to-teal-900 py-4 rounded-lg items-center mt-5" onPress={handleAddOrRenameMeal}>
               <Text className="text-white font-bold">
                 {isRenaming ? 'Rename' : 'Save'}
               </Text>

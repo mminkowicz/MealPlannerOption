@@ -13,7 +13,7 @@ export default function TabNavigator() {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#2c3e50',
+          background: 'linear-gradient(to right, #2c3e50, #4ca1af)',
           borderTopWidth: 1,
         },
         tabBarActiveTintColor: '#ecf0f1',

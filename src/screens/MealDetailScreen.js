@@ -124,10 +124,10 @@ export default function MealDetailScreen() {
 
   return (
     <Provider>
-      <View className="flex-1 p-5 bg-gray-100">
+      <View className="flex-1 p-5 bg-gradient-to-r from-gray-100 to-gray-300">
         <Text className="text-2xl font-bold mb-5">{meal.name}</Text>
 
-        <Button mode="contained" onPress={() => setModalVisible(true)} className="bg-teal-700 py-3 rounded-lg mb-5">
+        <Button mode="contained" onPress={() => setModalVisible(true)} className="bg-gradient-to-r from-teal-700 to-teal-900 py-3 rounded-lg mb-5">
           ➕ Add New Item
         </Button>
 
@@ -239,7 +239,7 @@ export default function MealDetailScreen() {
                 }} className="py-4 rounded-lg items-center bg-gray-400">
                   Cancel
                 </Button>
-                <Button mode="contained" onPress={handleSaveItem} className="py-4 rounded-lg items-center bg-teal-900">
+                <Button mode="contained" onPress={handleSaveItem} className="py-4 rounded-lg items-center bg-gradient-to-r from-teal-900 to-teal-700">
                   Save
                 </Button>
               </View>
